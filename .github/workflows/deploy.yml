@@ -13,3 +13,5 @@ jobs:
     steps:
       - run: |
           echo "deploy to cloud is running successfully"
+      - run: |
+          echo "something more"
