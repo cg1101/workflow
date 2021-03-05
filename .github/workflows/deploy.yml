@@ -4,10 +4,10 @@ jobs:
   build:
     steps:
       - run: |
-        echo "checkout code"
+          echo "checkout code"
       - run: |
-        echo "build"
+          echo "build"
   deploy_to_gcloud:
     steps:
       - run: |
-        echo "deploy to cloud is running successfully"
+          echo "deploy to cloud is running successfully"
