@@ -16,4 +16,4 @@ jobs:
       - run: |
           echo "deploy to cloud is running successfully"
       - run: |
-          echo "something more"
+          echo "something more to do"
