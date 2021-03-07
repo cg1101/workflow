@@ -1,6 +1,34 @@
 name: deploy_to_gcloud
 on: [push]
 jobs:
+  init:
+    runs-on: ubuntu-latest
+    outputs:
+      environ: ${{ steps.setvars.outputs.environ }}
+      gprojectid: ${{ steps.setvars.outputs.gprojectid }}
+    steps:
+      - name: Set variables
+        id: setvars
+        run: |
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+            echo '::set-output name=environ::prod'
+            echo '::set-output name=gprojectid::gcp-wow-rwds-api-prod'
+          elif [[ ${{ github.ref }} == 'refs/heads/hotfix' ]]; then
+            echo '::set-output name=environ::prod'
+            echo '::set-output name=gprojectid::gcp-wow-rwds-api-prod'
+          elif [[ ${{ github.ref }} == 'refs/heads/release' ]]; then
+            echo '::set-output name=environ::uat'
+            echo '::set-output name=gprojectid::gcp-wow-rwds-api-uat'
+          elif [[ ${{ github.ref }} == 'refs/heads/integrate' ]]; then
+            echo '::set-output name=environ::test'
+            echo '::set-output name=gprojectid::gcp-wow-rwds-api-test'
+          elif [[ ${{ github.ref }} == 'refs/heads/develop' ]]; then
+            echo '::set-output name=environ::dev'
+            echo '::set-output name=gprojectid::gcp-wow-rwds-api-01-dev'
+          else
+            echo '::set-output name=environ::poc'
+            echo '::set-output name=gprojectid::gcp-wow-rwds-api-poc-dev'
+          fi
   build:
     runs-on: ubuntu-latest
     steps:
@@ -10,8 +38,13 @@ jobs:
           echo "build"
   deploy_to_gcloud:
     runs-on: ubuntu-latest
+    needs: init
+    if: ${{ needs.init.outputs.environ }} != 'null'
+    environment:
+      name: ${{ needs.init.outputs.environ }}
     steps:
       - run: |
-          echo "deploy to cloud is running successfully"
+          echo "deploying to ${{ needs.init.outputs.environ }}"
+          echo "project is ${{ needs.init.output.gprojectid }}"
       - run: |
-          echo "something more"
+          echo "something more to do"
