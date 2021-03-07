@@ -11,7 +11,7 @@ jobs:
   deploy_to_gcloud:
     runs-on: ubuntu-latest
     environment:
-      name: dev
+      name: prod
     steps:
       - run: |
           echo "deploy to cloud is running successfully"
