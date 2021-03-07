@@ -45,6 +45,6 @@ jobs:
     steps:
       - run: |
           echo "deploying to ${{ needs.init.outputs.environ }}"
-          echo "project is ${{ needs.init.output.gprojectid }}"
+          echo "project is ${{ needs.init.outputs.gprojectid }}"
       - run: |
           echo "something more to do"
