@@ -29,13 +29,95 @@ jobs:
             echo '::set-output name=environ::poc'
             echo '::set-output name=gprojectid::gcp-wow-rwds-api-poc-dev'
           fi
-  build:
+  test_build_and_package:
+    # job test_build_and_package does following things
+    # - checkout source code
+    # - install node
+    # - install dependencies
+    # - run build (if applicable)
+    # - run test
+    # - upload artifacts
     runs-on: ubuntu-latest
+    needs: init
+    if: ${{ needs.init.outputs.environ }} != 'null'
+    environment:
+      name: ${{ needs.init.outputs.environ }}
+    env:
+      # generate domain name for vault secret
+      VAULT_ADDR: https://vault.${{ needs.init.outputs.environ }}.gcp.api-wr.com:8200
     steps:
-      - run: |
-          echo "checkout code"
-      - run: |
-          echo "build"
+      - # simply checkout code
+        # https://github.com/marketplace/actions/checkout#checkout-v2
+        name: Checkout
+        uses: actions/checkout@v2
+      - # retrieve .npmrc from vault, hashicorp/vault-action@v2.1.2 is 3rd party action
+        # https://github.com/marketplace/actions/vault-secrets
+        name: Get npmrc from Vault
+        id: vault
+      #   uses: hashicorp/vault-action@v2.1.2
+      #   with:
+      #     url: ${{ env.VAULT_ADDR }}
+      #     token: ${{ secrets.VAULT_TOKEN }}
+      #     tlsSkipVerify: true
+      #     caCertificate: ${{ secrets.VAULT_CA }}
+      #     secrets: |
+      #       kv/data/apis/npmrc npmrc ;
+        run: |
+          echo "${{ env.VAULT_ADDR }}" >>abc
+          echo "${{ secrets.VAULT_TOKEN }} " >>abc
+          echo "${{ secrets.VAULT_CA }} " >>abc
+          cat abc
+      - # setup node, install nodejs in runner
+        # https://github.com/marketplace/actions/setup-node-js-environment
+        #
+        # TODO: upgrade to V2
+        #
+        name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - # setup node module caching, see:
+        # https://github.com/marketplace/actions/cache
+        #
+        # https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows#example-using-the-cache-action
+        #
+        name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+              ${{ runner.OS }}-node-
+              ${{ runner.OS }}-
+      - # install dependencies, using .npmrc if applicable
+        # this one doesn't need predefined actions
+        name: Install Dependencies
+        run: |
+          echo \$\{\{ steps.vault.outputs.npmrc \}\} \|base64 -d \> \.npmrc
+          npm ci
+      - # run unit test
+        name: Run Unit Tests
+        run: npm test
+      - # run build
+        name: Build
+        run: npm run build
+      - # bundle up contents and upload
+        # https://github.com/marketplace/actions/upload-a-build-artifact
+        #
+        # This artifacts will be uploaded to github, and is visible in
+        # workflow execution details page
+        #
+        name: Upload package artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build_artifacts
+          path: |
+              dist
+              ./package.json
+              ./abc
+              ./.npmrc
+
   deploy_to_gcloud:
     runs-on: ubuntu-latest
     needs: init
