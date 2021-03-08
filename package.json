@@ -1,0 +1,24 @@
+{
+  "name": "workflow",
+  "version": "1.0.0",
+  "description": "[![deploy_to_gcloud](https://github.com/cg1101/workflow/actions/workflows/deploy.yml/badge.svg)](https://github.com/cg1101/workflow/actions/workflows/deploy.yml)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo testing run successfully",
+    "build": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cg1101/workflow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cg1101/workflow/issues"
+  },
+  "homepage": "https://github.com/cg1101/workflow#readme",
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  }
+}
