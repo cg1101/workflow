@@ -3,6 +3,7 @@
 [![deploy_to_gcloud](https://github.com/cg1101/workflow/actions/workflows/deploy.yml/badge.svg)](https://github.com/cg1101/workflow/actions/workflows/deploy.yml)
 
 This project is toy project that is designed to explores following things:
+
 * workflow implemented with github actions
 * use of environments
 * dependabot
@@ -23,3 +24,16 @@ Create file `.github/dependabot.yml` and edit its contents. This enables dependa
 ## Add a web page
 
 From repo home, go to `Settings` and then `Pages`, configure source and edit your html file.
+
+## Branching strategy
+
+Branch / Environment mapping relationships are as follows:
+
+Branch    | Environment
+----------|------------
+main      | prod
+release   | uat
+integrate | test
+develop   | dev
+\*        | poc
+
