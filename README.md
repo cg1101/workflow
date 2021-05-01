@@ -54,3 +54,5 @@ git rebase develop
 ```
 
 Then push it to github to create PR, with the destination set to `develop` branch.
+
+Reviewers can now review the changes made in this feature branch.
