@@ -37,3 +37,20 @@ integrate | test
 develop   | dev
 \*        | poc
 
+## Add new features
+
+First, create a new feature branch from latest `develop` branch.
+
+```sh
+git checkout develop
+git pull
+git checkout -b feature/new-feat
+```
+
+Then make your change in your new feature branch. Once change is done and test, rebase it against `develop` branch.
+
+```sh
+git rebase develop
+```
+
+Then push it to github to create PR, with the destination set to `develop` branch.
