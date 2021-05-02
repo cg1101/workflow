@@ -79,6 +79,8 @@ This feature is to be implemented in its own branch.
 
 This is first commit of `feature/cherry`.
 
+Some more work is done for `cherry`.
+
 ## Feature durian
 
 This feature is to be implemented in its own branch.
