@@ -61,6 +61,8 @@ Reviewers can now review the changes made in this feature branch.
 
 This feature is to be implemented in its own branch.
 
+This sentence is added in branch `feature/apple`.
+
 ## Feature banana
 
 This feature is to be implemented in its own branch.
