@@ -69,6 +69,8 @@ This one is added in `apple` branch in a new commit.
 
 This feature is to be implemented in its own branch.
 
+We created branch `feature/banana` for a different development stream.
+
 ## Feature cherry
 
 This feature is to be implemented in its own branch.
