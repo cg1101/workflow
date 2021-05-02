@@ -77,6 +77,8 @@ This is second part of `feature/banana`.
 
 This feature is to be implemented in its own branch.
 
+This is first commit of `feature/cherry`.
+
 ## Feature durian
 
 This feature is to be implemented in its own branch.
