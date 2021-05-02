@@ -56,3 +56,23 @@ git rebase develop
 Then push it to github to create PR, with the destination set to `develop` branch.
 
 Reviewers can now review the changes made in this feature branch.
+
+## Feature apple
+
+This feature is to be implemented in its own branch.
+
+## Feature banana
+
+This feature is to be implemented in its own branch.
+
+## Feature cherry
+
+This feature is to be implemented in its own branch.
+
+## Feature durian
+
+This feature is to be implemented in its own branch.
+
+## Feature eggplant
+
+This feature is to be implemented in its own branch.
