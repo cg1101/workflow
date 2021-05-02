@@ -71,6 +71,8 @@ This feature is to be implemented in its own branch.
 
 We created branch `feature/banana` for a different development stream.
 
+This is second part of `feature/banana`.
+
 ## Feature cherry
 
 This feature is to be implemented in its own branch.
